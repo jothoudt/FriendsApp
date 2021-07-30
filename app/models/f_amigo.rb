@@ -1,0 +1,2 @@
+class FAmigo < ApplicationRecord
+end
