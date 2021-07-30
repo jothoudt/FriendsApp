@@ -1,24 +1,11 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Friends List
+===
 
-Things you may want to cover:
+# DESCRIPTION
+---
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+This project was made following along with a Learn Ruby on Rails course. It is a full CRUD app that allows users
+to add friends to a list with their first and last name, email, phone number and twitter. The app also allows the user
+to update or delete their friends info.
