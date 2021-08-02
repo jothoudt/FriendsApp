@@ -1,5 +1,7 @@
 class FAmigosController < ApplicationController
   before_action :set_f_amigo, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, except: [:index, :show]
+  before_action :correct_user, only: [:edit, :update, :destroy]
 
   # GET /f_amigos or /f_amigos.json
   def index
@@ -12,7 +14,8 @@ class FAmigosController < ApplicationController
 
   # GET /f_amigos/new
   def new
-    @f_amigo = FAmigo.new
+    # @f_amigo = FAmigo.new
+    @f_amigo = current_user.f_amigos.build
   end
 
   # GET /f_amigos/1/edit
@@ -21,7 +24,8 @@ class FAmigosController < ApplicationController
 
   # POST /f_amigos or /f_amigos.json
   def create
-    @f_amigo = FAmigo.new(f_amigo_params)
+    # @f_amigo = FAmigo.new(f_amigo_params)
+    @f_amigo = current_user.f_amigos.build(f_amigo_params)
 
     respond_to do |format|
       if @f_amigo.save
@@ -56,6 +60,10 @@ class FAmigosController < ApplicationController
     end
   end
 
+  def correct_user
+    @f_amigo = current_user.f_amigos.find_by(id: params[:id])
+    redirect_to f_amigos_path, notice: "Not authorized to edit this friend" if @f_amigo.nil?
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_f_amigo
@@ -64,6 +72,6 @@ class FAmigosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def f_amigo_params
-      params.require(:f_amigo).permit(:first_name, :last_name, :email, :phone, :twitter)
+      params.require(:f_amigo).permit(:first_name, :last_name, :email, :phone, :twitter, :user_id)
     end
 end

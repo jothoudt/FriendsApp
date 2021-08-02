@@ -1,33 +1,40 @@
-<h1>Friends</h1>
+<% if user_signed_in? %>
 
-<table class="table table-striped table-hover">
-  <thead class="table-dark">
-    <tr>
-      <th>First name</th>
-      <th>Last name</th>
-      <th>Email</th>
-      <th>Phone</th>
-      <th>Twitter</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+  <h1>Friends</h1>
 
-  <tbody>
-    <% @f_amigos.each do |f_amigo| %>
+  <table class="table table-striped table-hover">
+    <thead class="table-dark">
       <tr>
-        <td><%= f_amigo.first_name %></td>
-        <td><%= f_amigo.last_name %></td>
-        <td><%= f_amigo.email %></td>
-        <td><%= f_amigo.phone %></td>
-        <td><%= f_amigo.twitter %></td>
-        <td><%= link_to 'Show', f_amigo %></td>
-        <td><%= link_to 'Edit', edit_f_amigo_path(f_amigo) %></td>
-        <td><%= link_to 'Destroy', f_amigo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Twitter</th>
+        <th>User Id</th>
+        <th colspan="2"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
-<br>
+    </thead>
 
-<%= link_to 'New Friend', new_f_amigo_path, class:"btn btn-dark" %>
+    <tbody>
+      <% @f_amigos.each do |f_amigo| %>
+        <% if f_amigo.user == current_user %>
+        <tr>
+          <td><%= link_to f_amigo.first_name + ' ' + f_amigo.last_name, f_amigo %></td>
+          <td><%= f_amigo.email %></td>
+          <td><%= f_amigo.phone %></td>
+          <td><%= f_amigo.twitter %></td>
+          <td><%= f_amigo.user_id %></td>
+          <td><%= link_to 'Edit', edit_f_amigo_path(f_amigo) %></td>
+          <td><%= link_to 'Destroy', f_amigo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+  <br>
+
+  <%= link_to 'New Friend', new_f_amigo_path, class:"btn btn-dark" %>
+<% else %>
+  <h1>Hello World</h1>
+<% end %>
+  
 
